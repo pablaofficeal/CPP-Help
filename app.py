@@ -6,6 +6,7 @@ import logging
 from logging import basicConfig, DEBUG
 from logging.handlers import RotatingFileHandler
 from datetime import datetime
+from config import Config
 
 basicConfig(level=DEBUG, filename='app.log', filemode='w', format='%(asctime)s %(levelname)s %(message)s')
 file_handler = RotatingFileHandler('app.log', 'a', 1000000, 1)
@@ -14,12 +15,7 @@ file_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s %(message
 basicConfig(handlers=[file_handler])
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = 'secret'
-app.config['SESSION_TYPE'] = 'filesystem'
-app.config['SESSION_PERMANENT'] = False
-app.config['SESSION_USE_SIGNER'] = True
+app.config.from_object(Config)
 
 db = SQLAlchemy(app)
 Session(app)
