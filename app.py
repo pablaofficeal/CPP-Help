@@ -1,11 +1,10 @@
 from flask import Flask, render_template
-from flask_sqlalchemy import SQLAlchemy
 from flask_session import Session
 from flask_login import LoginManager
 import logging
 from logging import basicConfig, DEBUG
 from logging.handlers import RotatingFileHandler
-from datetime import datetime
+from models import *
 from config import Config
 
 basicConfig(level=DEBUG, filename='app.log', filemode='w', format='%(asctime)s %(levelname)s %(message)s')
@@ -17,28 +16,10 @@ basicConfig(handlers=[file_handler])
 app = Flask(__name__)
 app.config.from_object(Config)
 
-db = SQLAlchemy(app)
 Session(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'       
 
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    password = db.Column(db.String(120), nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    is_admin = db.Column(db.Boolean, default=False)
-
-class Post(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), nullable=False)
-    content = db.Column(db.Text, nullable=False)
-    author = db.Column(db.String(120), nullable=False)
-    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    category = db.Column(db.String(120), nullable=False)
-    image = db.Column(db.String(120), nullable=True)
-    is_published = db.Column(db.Boolean, default=False)  
-    
 with app.app_context():
     db.create_all()    
 
