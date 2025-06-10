@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Языки программирования для новичков</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .presentation-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .slide {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .slide:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .slide h1 {
+            text-align: center;
+            color: #4a5568;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .slide h2 {
+            color: #2d3748;
+            font-size: 2rem;
+            margin-bottom: 25px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .slide h3 {
+            color: #4a5568;
+            font-size: 1.5rem;
+            margin: 20px 0 15px 0;
+        }
+
+        .language-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .language-card {
+            background: linear-gradient(135deg, #f7fafc, #edf2f7);
+            border-radius: 15px;
+            padding: 25px;
+            border-left: 5px solid;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .language-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .python-card { border-left-color: #3776ab; }
+        .c-card { border-left-color: #00599c; }
+        .cpp-card { border-left-color: #f34b7d; }
+        .asm-card { border-left-color: #654ff0; }
+
+        .language-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .language-icon {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+
+        .python-icon { background: #3776ab; }
+        .c-icon { background: #00599c; }
+        .cpp-icon { background: #f34b7d; }
+        .asm-icon { background: #654ff0; }
+
+        .difficulty-bar {
+            background: #e2e8f0;
+            height: 8px;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .difficulty-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .easy { background: #48bb78; width: 20%; }
+        .medium { background: #ed8936; width: 60%; }
+        .hard { background: #f56565; width: 80%; }
+        .expert { background: #9f7aea; width: 95%; }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .pros, .cons {
+            background: rgba(255, 255, 255, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .pros h4 { color: #38a169; }
+        .cons h4 { color: #e53e3e; }
+
+        .comparison-table {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 30px 0;
+        }
+
+        .comparison-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-weight: bold;
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .recommendation {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .recommendation h3 {
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .learning-path {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .path-step {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .path-arrow {
+            font-size: 2rem;
+            color: #667eea;
+            margin: 0 10px;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            
+            .slide h1 {
+                font-size: 2rem;
+            }
+            
+            .slide h2 {
+                font-size: 1.5rem;
+            }
+            
+            .pros-cons {
+                grid-template-columns: 1fr;
+            }
+            
+            .learning-path {
+                flex-direction: column;
+            }
+            
+            .path-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Титульный слайд -->
+        <div class="slide">
+            <h1>🚀 Какой язык программирования выбрать новичку?</h1>
+            <div style="text-align: center; font-size: 1.2rem; color: #4a5568; margin-top: 30px;">
+                <p>Сравнение Python, C, C++ и Assembly</p>
+                <p style="margin-top: 15px; font-style: italic;">Гид для начинающих разработчиков</p>
+            </div>
+        </div>
+
+        <!-- Обзор языков -->
+        <div class="slide">
+            <h2>📊 Сравнение языков программирования</h2>
+            <div class="language-grid">
+                <div class="language-card python-card">
+                    <div class="language-title">
+                        <div class="language-icon python-icon"></div>
+                        Python
+                    </div>
+                    <p><strong>Сложность:</strong></p>
+                    <div class="difficulty-bar">
+                        <div class="difficulty-fill easy"></div>
+                    </div>
+                    <p style="margin-top: 10px;">Высокоуровневый, интерпретируемый язык с простым синтаксисом</p>
+                </div>
+
+                <div class="language-card c-card">
+                    <div class="language-title">
+                        <div class="language-icon c-icon"></div>
+                        C
+                    </div>
+                    <p><strong>Сложность:</strong></p>
+                    <div class="difficulty-bar">
+                        <div class="difficulty-fill medium"></div>
+                    </div>
+                    <p style="margin-top: 10px;">Низкоуровневый, компилируемый язык, основа современного программирования</p>
+                </div>
+
+                <div class="language-card cpp-card">
+                    <div class="language-title">
+                        <div class="language-icon cpp-icon"></div>
+                        C++
+                    </div>
+                    <p><strong>Сложность:</strong></p>
+                    <div class="difficulty-bar">
+                        <div class="difficulty-fill hard"></div>
+                    </div>
+                    <p style="margin-top: 10px;">Расширение C с объектно-ориентированным программированием</p>
+                </div>
+
+                <div class="language-card asm-card">
+                    <div class="language-title">
+                        <div class="language-icon asm-icon"></div>
+                        Assembly
+                    </div>
+                    <p><strong>Сложность:</strong></p>
+                    <div class="difficulty-bar">
+                        <div class="difficulty-fill expert"></div>
+                    </div>
+                    <p style="margin-top: 10px;">Низкоуровневый язык, максимально близкий к машинному коду</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Детальное сравнение -->
+        <div class="slide">
+            <h2>🔍 Детальное сравнение</h2>
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Критерий</th>
+                            <th>Python</th>
+                            <th>C</th>
+                            <th>C++</th>
+                            <th>Assembly</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Простота изучения</strong></td>
+                            <td>⭐⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐</td>
+                            <td>⭐⭐</td>
+                            <td>⭐</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Скорость выполнения</strong></td>
+                            <td>⭐⭐</td>
+                            <td>⭐⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐⭐⭐</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Количество библиотек</strong></td>
+                            <td>⭐⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐</td>
+                            <td>⭐⭐⭐⭐</td>
+                            <td>⭐</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Востребованность</strong></td>
+                            <td>⭐⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐⭐</td>
+                            <td>⭐⭐</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Зарплата</strong></td>
+                            <td>⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐⭐⭐</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Python детально -->
+        <div class="slide">
+            <h2>🐍 Python - Идеальный выбор для новичка</h2>
+            <div class="pros-cons">
+                <div class="pros">
+                    <h4>✅ Преимущества:</h4>
+                    <ul>
+                        <li>Простой и читаемый синтаксис</li>
+                        <li>Огромное количество библиотек</li>
+                        <li>Активное сообщество</li>
+                        <li>Универсальность применения</li>
+                        <li>Быстрая разработка прототипов</li>
+                        <li>Отличная документация</li>
+                    </ul>
+                </div>
+                <div class="cons">
+                    <h4>❌ Недостатки:</h4>
+                    <ul>
+                        <li>Медленнее компилируемых языков</li>
+                        <li>Потребляет больше памяти</li>
+                        <li>Не подходит для системного программирования</li>
+                        <li>Проблемы с многопоточностью (GIL)</li>
+                    </ul>
+                </div>
+            </div>
+            <h3>🎯 Где используется:</h3>
+            <p>Веб-разработка, Data Science, AI/ML, автоматизация, скрипты, научные вычисления</p>
+        </div>
+
+        <!-- C детально -->
+        <div class="slide">
+            <h2>⚡ C - Основа программирования</h2>
+            <div class="pros-cons">
+                <div class="pros">
+                    <h4>✅ Преимущества:</h4>
+                    <ul>
+                        <li>Высокая производительность</li>
+                        <li>Контроль над памятью</li>
+                        <li>Портативность</li>
+                        <li>Основа для изучения других языков</li>
+                        <li>Небольшой размер программ</li>
+                        <li>Стандартизированный язык</li>
+                    </ul>
+                </div>
+                <div class="cons">
+                    <h4>❌ Недостатки:</h4>
+                    <ul>
+                        <li>Сложное управление памятью</li>
+                        <li>Много низкоуровневых деталей</li>
+                        <li>Отсутствие ООП</li>
+                        <li>Подвержен ошибкам с указателями</li>
+                        <li>Медленная разработка</li>
+                    </ul>
+                </div>
+            </div>
+            <h3>🎯 Где используется:</h3>
+            <p>Системное программирование, встроенные системы, операционные системы, драйверы</p>
+        </div>
+
+        <!-- C++ детально -->
+        <div class="slide">
+            <h2>🚀 C++ - Мощь и сложность</h2>
+            <div class="pros-cons">
+                <div class="pros">
+                    <h4>✅ Преимущества:</h4>
+                    <ul>
+                        <li>Объектно-ориентированное программирование</li>
+                        <li>Высокая производительность</li>
+                        <li>Богатая стандартная библиотека</li>
+                        <li>Совместимость с C</li>
+                        <li>Мультипарадигменность</li>
+                        <li>Широкие возможности</li>
+                    </ul>
+                </div>
+                <div class="cons">
+                    <h4>❌ Недостатки:</h4>
+                    <ul>
+                        <li>Очень сложный синтаксис</li>
+                        <li>Долгое время изучения</li>
+                        <li>Сложная отладка</li>
+                        <li>Множество способов решения задач</li>
+                        <li>Управление памятью</li>
+                    </ul>
+                </div>
+            </div>
+            <h3>🎯 Где используется:</h3>
+            <p>Игровая индустрия, системы реального времени, высокопроизводительные приложения, браузеры</p>
+        </div>
+
+        <!-- Assembly детально -->
+        <div class="slide">
+            <h2>🔧 Assembly - Для экспертов</h2>
+            <div class="pros-cons">
+                <div class="pros">
+                    <h4>✅ Преимущества:</h4>
+                    <ul>
+                        <li>Максимальная производительность</li>
+                        <li>Полный контроль над железом</li>
+                        <li>Минимальное потребление ресурсов</li>
+                        <li>Понимание работы компьютера</li>
+                        <li>Необходим для реверс-инжиниринга</li>
+                    </ul>
+                </div>
+                <div class="cons">
+                    <h4>❌ Недостатки:</h4>
+                    <ul>
+                        <li>Крайне сложен для изучения</li>
+                        <li>Зависит от архитектуры</li>
+                        <li>Очень медленная разработка</li>
+                        <li>Сложно поддерживать код</li>
+                        <li>Ограниченное применение</li>
+                        <li>Высокий порог входа</li>
+                    </ul>
+                </div>
+            </div>
+            <h3>🎯 Где используется:</h3>
+            <p>Критически важные участки кода, драйверы устройств, загрузчики, встроенные системы</p>
+        </div>
+
+        <!-- Рекомендации -->
+        <div class="slide">
+            <h2>💡 Рекомендации для новичков</h2>
+            
+            <div class="recommendation">
+                <h3>🏆 Лучший выбор для старта: Python</h3>
+                <p>Python позволяет сосредоточиться на изучении основ программирования, не отвлекаясь на сложный синтаксис и управление памятью.</p>
+            </div>
+
+            <h3>📚 Рекомендуемый путь изучения:</h3>
+            <div class="learning-path">
+                <div class="path-step">1. Python</div>
+                <div class="path-arrow">→</div>
+                <div class="path-step">2. C</div>
+                <div class="path-arrow">→</div>
+                <div class="path-step">3. C++</div>
+                <div class="path-arrow">→</div>
+                <div class="path-step">4. Assembly</div>
+            </div>
+
+            <h3>🎯 Выбор по целям:</h3>
+            <div style="background: rgba(255,255,255,0.5); padding: 20px; border-radius: 10px; margin: 20px 0;">
+                <p><strong>🌐 Веб-разработка, ИИ, анализ данных:</strong> Python</p>
+                <p><strong>🎮 Игры, высокопроизводительные приложения:</strong> C++</p>
+                <p><strong>⚙️ Системное программирование:</strong> C</p>
+                <p><strong>🔧 Низкоуровневая оптимизация:</strong> Assembly</p>
+            </div>
+        </div>
+
+        <!-- Заключение -->
+        <div class="slide">
+            <h2>🎯 Заключение</h2>
+            <div style="text-align: center; font-size: 1.1rem; line-height: 1.8;">
+                <p style="margin-bottom: 20px;"><strong>Главное правило:</strong> Начинайте с того языка, который соответствует вашим целям!</p>
+                
+                <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 25px; border-radius: 15px; margin: 30px 0;">
+                    <h3 style="color: white; margin-bottom: 15px;">🚀 Начните с Python, если:</h3>
+                    <p>• Вы полный новичок в программировании</p>
+                    <p>• Хотите быстро увидеть результаты</p>
+                    <p>• Интересуетесь данными, веб-разработкой или ИИ</p>
+                </div>
+
+                <p style="color: #4a5568; font-style: italic;">
+                    Помните: любой изученный язык программирования делает изучение следующих проще!
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
